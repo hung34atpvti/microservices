@@ -1,11 +1,11 @@
 package com.declan.customer.domain.customer.service.impl;
 
-import com.declan.clients.domain.fraud.FraudClient;
 import com.declan.customer.domain.customer.dto.CustomerRegistrationRequest;
 //import com.declan.customer.domain.customer.dto.FraudCheckResponse;
 import com.declan.customer.domain.customer.model.Customer;
 import com.declan.customer.domain.customer.repository.CustomerRepository;
 import com.declan.customer.domain.customer.service.CustomerService;
+import com.declan.fraud.domain.fraudCheck.client.FraudClient;
 import com.declan.fraud.domain.fraudCheck.dto.FraudCheckResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
