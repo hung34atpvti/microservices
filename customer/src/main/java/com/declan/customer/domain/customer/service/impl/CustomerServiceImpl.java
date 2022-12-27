@@ -1,20 +1,23 @@
 package com.declan.customer.domain.customer.service.impl;
 
+import com.declan.clients.domain.fraud.FraudClient;
 import com.declan.customer.domain.customer.dto.CustomerRegistrationRequest;
-import com.declan.customer.domain.customer.dto.FraudCheckResponse;
+//import com.declan.customer.domain.customer.dto.FraudCheckResponse;
 import com.declan.customer.domain.customer.model.Customer;
 import com.declan.customer.domain.customer.repository.CustomerRepository;
 import com.declan.customer.domain.customer.service.CustomerService;
+import com.declan.fraud.domain.fraudCheck.dto.FraudCheckResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+//import org.springframework.web.client.RestTemplate;
 
 @Service
 @AllArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerRepository;
-    private final RestTemplate restTemplate;
+//    private final RestTemplate restTemplate;
+    private final FraudClient fraudClient;
 
     @Override
     public void registerCustomer(CustomerRegistrationRequest request) {
@@ -27,11 +30,12 @@ public class CustomerServiceImpl implements CustomerService {
         // todo: check if email not taken
         customerRepository.saveAndFlush(customer);
         // todo: check if fraudster
-        FraudCheckResponse fraudCheckResponse = restTemplate.getForObject(
-                "http://FRAUD/api/v1/fraud-check/{customerId}",
-                FraudCheckResponse.class,
-                customer.getId()
-        );
+        FraudCheckResponse fraudCheckResponse = fraudClient.isFraudster(customer.getId());
+//                restTemplate.getForObject(
+//                "http://FRAUD/api/v1/fraud-check/{customerId}",
+//                FraudCheckResponse.class,
+//                customer.getId()
+//        );
         if(fraudCheckResponse.getIsFraudster()) {
             throw new IllegalStateException("fraudster");
         }
