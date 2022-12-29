@@ -12,6 +12,7 @@
     <module>customer</module>
     <module>fraud</module>
     <module>eureka-server</module>
+    <module>api-gateway</module>
   </modules>
 
   <name>microservices</name>
